@@ -3,12 +3,14 @@ package com.levi.hexagonal.adapters.out;
 import com.levi.hexagonal.adapters.out.repository.CustomerRepository;
 import com.levi.hexagonal.adapters.out.repository.mapper.CustomerEntityMapper;
 import com.levi.hexagonal.application.core.domain.Customer;
-import com.levi.hexagonal.application.ports.out.InsertCustomerOutputPort;
+import com.levi.hexagonal.application.ports.out.FindCustomerByIdOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
-public class InsertCustomerAdapter implements InsertCustomerOutputPort {
+public class findCustomerByIdAdapter implements FindCustomerByIdOutputPort {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -17,8 +19,8 @@ public class InsertCustomerAdapter implements InsertCustomerOutputPort {
     private CustomerEntityMapper customerEntityMapper;
 
     @Override
-    public void insert(Customer customer) {
-        var customerEntity = customerEntityMapper.toCustomerEntity(customer);
-        customerRepository.save(customerEntity);
+    public Optional<Customer> find(String id) {
+        var customerEntity = customerRepository.findById(id);
+        return customerEntity.map(entity -> customerEntityMapper.toCustomer(entity));
     }
 }
