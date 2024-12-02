@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class findCustomerByIdAdapter implements FindCustomerByIdOutputPort {
+public class FindCustomerByIdAdapter implements FindCustomerByIdOutputPort {
 
     @Autowired
     private CustomerRepository customerRepository;
